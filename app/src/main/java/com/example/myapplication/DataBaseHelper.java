@@ -16,6 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "COLUMN_NAME";
     public static final String COLUMN_PATH = "COLUMN_PATH";
     public static final String DB_NAME = "soundBtn.db";
+    public static final int BUTTON_NUMBER_LIMIT = 9;
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
@@ -44,7 +45,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_NAME, buttonModel.getName());
         cv.put(COLUMN_PATH, buttonModel.getPath());
         cursor.close();
-        if(numberRows < 3){
+        if(numberRows < BUTTON_NUMBER_LIMIT){
             long insert = db.insert(BUTTON_TABLE, null, cv);
             db.close();
             return insert != -1;
