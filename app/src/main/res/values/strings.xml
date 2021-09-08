@@ -2,4 +2,6 @@
     <string name="app_name">MyApplication</string>
     <string name="Add">ADD</string>
     <string name="sade">:/</string>
+    <string name="button_name">Button name</string>
+    <string name="create_button">CREATE</string>
 </resources>

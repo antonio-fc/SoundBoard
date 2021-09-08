@@ -48,7 +48,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteOne(ButtonModel buttonModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM" + BUTTON_TABLE + " WHERE " + COLUMN_ID + " = " + buttonModel.getId();
+        String query = "DELETE FROM " + BUTTON_TABLE + " WHERE " + COLUMN_ID + " = " + buttonModel.getId();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) return true;
         else return false;

@@ -3,11 +3,11 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,11 +17,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnAdd;
     EditText btnName;
     RecyclerView btnList;
+    Button createBtn;
 
     Button btnDeleteAll;
-
     DataBaseHelper dbHelper;
-    ArrayAdapter btnArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         btnName = findViewById(R.id.etName);
         btnList = findViewById(R.id.rclView);
         btnDeleteAll = findViewById(R.id.btnDeleteAll);
+        createBtn = findViewById(R.id.createBtnMenu);
 
         dbHelper = new DataBaseHelper(MainActivity.this);
 
@@ -58,10 +58,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Table restarted: " + success, Toast.LENGTH_SHORT).show();
             showButtonList();
         });
+
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CreateButtonMenu.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void showButtonList(){
-        //btnArrayAdapter = new ArrayAdapter<ButtonModel>(MainActivity.this, android.R.layout.simple_list_item_1, dbHelper.getAll());
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dbHelper.getAll());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 3);
         btnList.setLayoutManager(layoutManager);

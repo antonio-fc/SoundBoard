@@ -23,6 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         private Button button;
         private TextView textView;
+        private int id;
         private String path;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -30,6 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             button = itemView.findViewById(R.id.button);
             textView = itemView.findViewById(R.id.textView);
             path = "";
+            id = 0;
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,6 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         String path = btnList.get(position).getPath();
         holder.button.setText(String.valueOf(id));
         holder.textView.setText(name);
+        holder.id = id;
         holder.path = path;
     }
 
