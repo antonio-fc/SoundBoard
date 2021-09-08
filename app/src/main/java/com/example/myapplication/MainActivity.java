@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnAdd;
-    EditText btnName;
     RecyclerView btnList;
     Button createBtn;
 
@@ -27,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnAdd = findViewById(R.id.btnAdd);
-        btnName = findViewById(R.id.etName);
         btnList = findViewById(R.id.rclView);
         btnDeleteAll = findViewById(R.id.btnDeleteAll);
         createBtn = findViewById(R.id.createBtnMenu);
@@ -36,22 +32,6 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DataBaseHelper(MainActivity.this);
 
         showButtonList();
-
-        btnAdd.setOnClickListener(view -> {
-            ButtonModel buttonModel;
-            try {
-                if(btnName.getText().toString().matches("")) throw new NoButtonNameException("Forgot to give the button a name");
-                buttonModel = new ButtonModel(-1, btnName.getText().toString(), "path");
-            }
-            catch (Exception e){
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                return;
-            }
-            btnName.setText("");
-            boolean success = dbHelper.addOne(buttonModel);
-            Toast.makeText(MainActivity.this, "Adding button: " + success + "\n" + buttonModel.toString(), Toast.LENGTH_SHORT).show();
-            showButtonList();
-        });
 
         btnDeleteAll.setOnClickListener(view -> {
             boolean success = dbHelper.restartTable();
