@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
-    private ArrayList<ButtonModel> btnList;
+    private final ArrayList<ButtonModel> btnList;
 
     public RecyclerAdapter(ArrayList<ButtonModel> btnList) {
         this.btnList = btnList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private Button button;
-        private TextView textView;
+        private final Button button;
+        private final TextView textView;
         private int id;
         private String path;
 
@@ -33,11 +33,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             path = "";
             id = 0;
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), "path: " + path, Toast.LENGTH_SHORT).show();
-                }
+            button.setOnClickListener(view -> {
+                Toast.makeText(itemView.getContext(), "path: " + path, Toast.LENGTH_SHORT).show();
             });
         }
     }

@@ -32,10 +32,10 @@
 
     <Button
         android:id="@+id/createBtnMenu"
-        android:layout_width="70dp"
-        android:layout_height="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="16dp"
-        android:text="->"
+        android:text="@string/make_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

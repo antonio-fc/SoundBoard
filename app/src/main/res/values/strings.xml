@@ -4,4 +4,5 @@
     <string name="sade">:/</string>
     <string name="button_name">Button name</string>
     <string name="create_button">CREATE</string>
+    <string name="make_button">MAKE NEW BUTTON +</string>
 </resources>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,26 +31,24 @@ public class CreateButtonMenu extends AppCompatActivity {
         if(actionBar != null){
             actionBar.setTitle("Create Button");
         }
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreateButtonMenu.this, MainActivity.class);
-                ButtonModel buttonModel;
-                try {
-                    if(etName.getText().toString().matches("")) throw new NoButtonNameException("Forgot to give the button a name");
-                    buttonModel = new ButtonModel(-1, etName.getText().toString(), "path");
-                }
-                catch (Exception e){
-                    Toast.makeText(CreateButtonMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                etName.setText("");
-                boolean success = dbHelper.addOne(buttonModel);
-                Toast.makeText(CreateButtonMenu.this, "Adding button: " + success + "\n" + buttonModel.toString(), Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+        createBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(CreateButtonMenu.this, MainActivity.class);
+            ButtonModel buttonModel;
+            try {
+                if(etName.getText().toString().matches("")) throw new NoButtonNameException("Forgot to give the button a name");
+                buttonModel = new ButtonModel(-1, etName.getText().toString(), "path");
             }
+            catch (Exception e){
+                Toast.makeText(CreateButtonMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            etName.setText("");
+            boolean success = dbHelper.addOne(buttonModel);
+            Toast.makeText(CreateButtonMenu.this, "Adding button: " + success + "\n" + buttonModel.toString(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         });
     }
 }

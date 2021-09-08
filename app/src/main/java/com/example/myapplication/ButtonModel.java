@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+
 public class ButtonModel {
     private int id;
     private String name;
@@ -35,6 +37,7 @@ public class ButtonModel {
         this.path = path;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ButtonModel{" +

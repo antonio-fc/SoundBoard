@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String BUTTON_TABLE = "BUTTON_TABLE";
@@ -42,16 +41,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long insert = db.insert(BUTTON_TABLE, null, cv);
         db.close();
-        if(insert == -1) return false;
-        else return true;
+        return insert != -1;
     }
 
     public boolean deleteOne(ButtonModel buttonModel){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + BUTTON_TABLE + " WHERE " + COLUMN_ID + " = " + buttonModel.getId();
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()) return true;
-        else return false;
+        if(cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        }
+        else {
+            cursor.close();
+            return false;
+        }
     }
 
     public ArrayList<ButtonModel> getAll(){
