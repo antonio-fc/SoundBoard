@@ -35,13 +35,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean addOne(ButtonModel buttonModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        String countQuery = "SELECT COUNT(*) FROM " + BUTTON_TABLE;
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.moveToFirst();
+        int numberRows = cursor.getInt(0);
 
         cv.put(COLUMN_NAME, buttonModel.getName());
         cv.put(COLUMN_PATH, buttonModel.getPath());
-
-        long insert = db.insert(BUTTON_TABLE, null, cv);
-        db.close();
-        return insert != -1;
+        cursor.close();
+        if(numberRows < 3){
+            long insert = db.insert(BUTTON_TABLE, null, cv);
+            db.close();
+            return insert != -1;
+        }
+        else return false;
     }
 
     public boolean deleteOne(ButtonModel buttonModel){

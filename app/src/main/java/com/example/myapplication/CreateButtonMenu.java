@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -48,7 +47,7 @@ public class CreateButtonMenu extends AppCompatActivity {
             etName.setText("");
             boolean success = dbHelper.addOne(buttonModel);
             Toast.makeText(CreateButtonMenu.this, "Adding button: " + success + "\n" + buttonModel.toString(), Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+            if(success) startActivity(intent);
         });
     }
 }
