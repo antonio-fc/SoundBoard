@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
+        MediaPlayer mediaPlayer;
+
         private final Button button;
         private final TextView textView;
         private int id;
@@ -34,7 +37,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             id = 0;
 
             button.setOnClickListener(view -> {
-                Toast.makeText(itemView.getContext(), "path: " + path, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(itemView.getContext(), "path: " + path, Toast.LENGTH_SHORT).show();
+                try {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(path);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                    Toast.makeText(itemView.getContext(), "Recording is playing", Toast.LENGTH_SHORT).show();
+                } catch(Exception e){
+                    Toast.makeText(itemView.getContext(), "Failed to play audio: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }

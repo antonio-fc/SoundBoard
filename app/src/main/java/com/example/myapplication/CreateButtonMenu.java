@@ -23,8 +23,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreateButtonMenu extends AppCompatActivity {
 
-    private static int MICROPHONE_PERMISSION = 200;
-    private static int AUDIO_TIME_LIMIT = 3000; //milliseconds
+    private static final int MICROPHONE_PERMISSION = 200;
+    private static final int AUDIO_TIME_LIMIT = 5000; //milliseconds
     MediaRecorder mediaRecorder;
     MediaPlayer mediaPlayer;
 
@@ -34,6 +34,7 @@ public class CreateButtonMenu extends AppCompatActivity {
     Button playBtn;
 
     DataBaseHelper dbHelper;
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +61,16 @@ public class CreateButtonMenu extends AppCompatActivity {
         if(isMicrophonePresent()) getMicrophonePermission();
 
         createBtn.setOnClickListener(view -> {
+            try {
+                getRecordingFilePath();
+            } catch (NoButtonNameException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(CreateButtonMenu.this, MainActivity.class);
             ButtonModel buttonModel;
             try {
                 if(etName.getText().toString().matches("")) throw new NoButtonNameException("Forgot to give the button a name");
-                buttonModel = new ButtonModel(-1, etName.getText().toString(), "path");
+                buttonModel = new ButtonModel(-1, etName.getText().toString(), file.getPath());
             }
             catch (Exception e){
                 Toast.makeText(CreateButtonMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -94,9 +100,7 @@ public class CreateButtonMenu extends AppCompatActivity {
                 mediaRecorder.start();
                 Toast.makeText(this, "Recording is started", Toast.LENGTH_SHORT).show();
                 isPlayingAudio.set(true);
-                new Handler().postDelayed(() -> {
-                    recordBtn.performClick();
-                }, AUDIO_TIME_LIMIT);
+                new Handler().postDelayed(() -> {if(isPlayingAudio.get()) recordBtn.performClick();}, AUDIO_TIME_LIMIT);
             } catch(Exception e){
                 Toast.makeText(this, "Failed to record audio: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -125,10 +129,12 @@ public class CreateButtonMenu extends AppCompatActivity {
         }
     }
 
-    private String getRecordingFilePath(){
+    private String getRecordingFilePath() throws NoButtonNameException {
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File musicDirectory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File file  = new File(musicDirectory, "testRecordingFile" + ".mp3");
+        if(etName.getText().toString().matches("")) throw new NoButtonNameException("Forgot to give the button a name");
+        file  = new File(musicDirectory, etName.getText() + ".mp3");
+        //Toast.makeText(this, "path: " + file.getPath(), Toast.LENGTH_SHORT).show();
         return file.getPath();
     }
 }
