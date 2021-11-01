@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CreateButtonMenu extends AppCompatActivity {
 
     private static int MICROPHONE_PERMISSION = 200;
+    private static int AUDIO_TIME_LIMIT = 3000; //milliseconds
     MediaRecorder mediaRecorder;
     MediaPlayer mediaPlayer;
 
@@ -92,6 +94,9 @@ public class CreateButtonMenu extends AppCompatActivity {
                 mediaRecorder.start();
                 Toast.makeText(this, "Recording is started", Toast.LENGTH_SHORT).show();
                 isPlayingAudio.set(true);
+                new Handler().postDelayed(() -> {
+                    recordBtn.performClick();
+                }, AUDIO_TIME_LIMIT);
             } catch(Exception e){
                 Toast.makeText(this, "Failed to record audio: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
